@@ -1,6 +1,6 @@
 export function BookDetail() {
 
-    return (
-        <div>BookDetail</div>
-    )
+  return (
+    <div>BookDetail</div>
+  )
 }

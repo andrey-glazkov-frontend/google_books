@@ -1,3 +1,4 @@
+/* eslint-disable semi */
 /* eslint-disable comma-dangle */
 /* eslint-disable no-undef */
 /* eslint-disable quotes */
@@ -25,7 +26,7 @@ module.exports = {
   rules: {
     "comma-dangle": ["error", "never"],
     quotes: ["error", "single"],
-    semi: ["error", "always"],
+    semi: ["error", "never"],
     indent: ["error", 2],
     "no-multi-spaces": ["error"],
     "react/jsx-uses-react": 0,

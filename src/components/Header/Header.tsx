@@ -1,5 +1,5 @@
-import { SearchBar } from '../SearchBar/SearchBar';
-import { SearchFilters } from '../SearchFilters/SearchFilters';
+import { SearchBar } from '../SearchBar/SearchBar'
+import { SearchFilters } from '../SearchFilters/SearchFilters'
 
 export function Header() {
 
@@ -9,5 +9,5 @@ export function Header() {
       <SearchBar />
       <SearchFilters />
     </div>
-  );
+  )
 }
