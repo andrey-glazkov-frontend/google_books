@@ -4,10 +4,10 @@ import { SearchFilters } from '../SearchFilters/SearchFilters'
 export function Header() {
 
   return (
-    <div>
-      <h2>Search for books</h2>
+    <header className="mt-4 mb-4">
+      <h2 className="mb-4">Search for books</h2>
       <SearchBar />
       <SearchFilters />
-    </div>
+    </header>
   )
 }

@@ -4,14 +4,15 @@ import { Book, BooksState } from '../../components/types/types'
 const initialState: BooksState = {
   books: [],
   isLoading: false,
-  error: null
+  error: null,
+  startIndex: 0
 }
 
 const booksSlice = createSlice({
   name: 'books',
   initialState,
   reducers: {
-    addBooks: (state: BooksState, action: PayloadAction<{ items: Book[], totalItems: number }>) => {
+    addBooks: (state, action: PayloadAction<{ items: Book[]; totalItems: number }>) => {
       const newBooksQueryResponse = {
         items: action.payload.items,
         totalItems: action.payload.totalItems
@@ -27,12 +28,15 @@ const booksSlice = createSlice({
     setError: (state, action: PayloadAction<string | null>) => {
       state.error = action.payload
     },
-    deleteBooks: (state: BooksState) => {
+    deleteBooks: (state) => {
       state.books = []
+    },
+    loadMoreBooks: (state, action: PayloadAction<{ startIndex: number; limit: number }>) => {
+      state.startIndex = action.payload.startIndex
     }
   }
 })
 
-export const { addBooks, setLoading, setError, deleteBooks } = booksSlice.actions
+export const { addBooks, setLoading, setError, deleteBooks, loadMoreBooks } = booksSlice.actions
 
-export const booksSliceReducer = booksSlice.reducer
+export const booksSliceReducer= booksSlice.reducer

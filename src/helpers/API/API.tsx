@@ -16,7 +16,6 @@ export const booksApi = createApi({
       sort: string;
       startIndex: number;
       limit: number;
-
     }>({
       query: ({ query, category, sort, startIndex = 0, limit =30 }) => {
         const encodedQuery = query.query
@@ -28,7 +27,7 @@ export const booksApi = createApi({
       }
     }),
     getBookById: builder.query<Book, string>({
-      query: (id) => {
+      query: (id: string) => {
         const url = `volumes/${id}?key=${GOOGLE_BOOKS_API_KEY}`
         return {
           url

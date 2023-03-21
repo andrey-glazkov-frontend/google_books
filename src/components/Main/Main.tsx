@@ -1,9 +1,13 @@
+/* eslint-disable react/style-prop-object */
 import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { useDispatch } from 'react-redux'
-import { addBooks, setError, setLoading } from '../../redux/slices/booksSlice'
 import { RootState } from '../../redux/store'
-import { Book, BooksQueryResponse, BooksState } from '../types/types'
+import { Book, BooksState } from '../types/types'
+
+import { NavLink, useParams } from 'react-router-dom'
+import { LoadMoreButton } from '../LoadMoreButton/LoadMoreButton'
+
+// import { LoadMoreButton } from '../LoadMoreButton/LoadMoreButton'
 
 export function Main() {
 
@@ -18,56 +22,54 @@ export function Main() {
     }
   }, [books])
 
-  const booksItem = books.map((book) => book.items)
-
+  const booksItem = books.length > 0 ? books.map((book) => book.items) : []
   console.log(booksItem)
 
   const isLoading = useSelector((state: RootState) => state.books.isLoading)
   const error = useSelector((state: RootState) => state.books.error)
 
-
-  // const handleLoadMore = () => {
-  //   dispatch(setLoading(true));
-
-  //   // здесь выполните запрос на получение следующих 30 результатов и вызовите addBooks с полученными данными
-  //   // например, используя fetch и передавая смещение:
-  //   const offset = books.length;
-  //   fetch(`https://api.example.com/books?limit=30&offset=${offset}`)
-  //     .then((response) => response.json())
-  //     .then((data: BooksQueryResponse) => {
-  //       dispatch(addBooks(data));
-  //       dispatch(setLoading(false));
-  //     })
-  //     .catch((error) => {
-  //       dispatch(setError(error.message));
-  //       dispatch(setLoading(false));
-  //     });
-  // };
-
+  console.log(isLoading)
 
   return (
-
     <div>
-      {isLoading && <p>Loading...</p>}
       {error && <p>{error}</p>}
       <h3>Found {totalItems} results</h3>
-      <div>
-        {booksItem.map((bookList) => (
-          bookList.map((book: Book) => (
-       
-            <div className="card" key={book.id}>
-              <img className="card-img-top" src={book.volumeInfo.imageLinks.thumbnail} alt="Card image cap" />
-              <div className="card-body">
-                <h5 className="card-title">{book.volumeInfo.title}</h5>
-                <p className="card-text">{book.volumeInfo.description}</p>
-                <a href="#" className="btn btn-primary">Go somewhere</a>
+      <div className="container" style={{ backgroundColor: 'white' }}>
+        <div className="row">
+          {booksItem.map((bookList) =>
+            bookList.map((book: Book) => (
+              <div className="col-md-4 mb-4" key={book.id}>
+                <NavLink to={`/detail/${book.id}`}>
+                  <div className="card h-100 border-0 card-hover" style={{ backgroundColor: '#F1F1F1', overflow: 'hidden' }}>
+                    <div className="card-img-top p-3 position-relative" style={{ textAlign: 'center', height: '300px', overflow: 'hidden' }}>
+                      {book.volumeInfo.imageLinks?.thumbnail && <img
+                        src={book.volumeInfo.imageLinks.thumbnail}
+                        alt={book.volumeInfo.title}
+                        style={{
+                          maxWidth: '100%',
+                          maxHeight: '100%',
+                          position: 'absolute',
+                          top: '50%',
+                          left: '50%',
+                          transform: 'translate(-50%, -50%)',
+                          transition: 'transform .3s ease-in-out'
+                        }}
+                      />}
+                    </div>
+                    <div className="card-body d-flex flex-column justify-content-between">
+                      <div>
+                        <h5 className="card-title text-center">{book.volumeInfo.title}</h5>
+                        <p className="card-text text-center">{book.volumeInfo.author}</p>
+                      </div>
+                    </div>
+                  </div>
+                </NavLink>
               </div>
-            </div>
-          ))
-        ))}
-
-      
+            ))
+          )}
+        </div>
       </div>
+      <LoadMoreButton />
     </div>
   )
 }
